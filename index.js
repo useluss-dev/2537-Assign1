@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const app = express();
 const Joi = require("joi");
-const expireTime = 24 * 60 * 60 * 1000; //expires after 1 day  (hours * minutes * seconds * millis)
+const expireTime = 1 * 60 * 60 * 1000; //expires after 1 hour (hours * minutes * seconds * millis)
 
 const port = process.env.PORT || 3000;
 const mongodb_host = process.env.MONGODB_HOST;
@@ -162,6 +162,11 @@ app.get('/logout', (req,res) => {
 });
 
 app.get('/members', (req, res) => {
+    if (!req.session.authenticated) {
+        res.redirect("/")
+        return;
+    }
+    
     const publicDir = path.join(__dirname, 'public');
 
     fs.readdir(publicDir, (err, files) => {
