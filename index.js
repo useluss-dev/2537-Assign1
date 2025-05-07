@@ -49,7 +49,7 @@ app.use(session({
 ));
 
 app.get('/', (req,res) => {
-    res.send("<h1>Hello World!</h1>");
+    res.send("<button>signup</button>");
 });
 
 app.get('/nosql-injection', async (req,res) => {
